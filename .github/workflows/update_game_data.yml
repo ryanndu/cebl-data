@@ -23,5 +23,5 @@ jobs:
           pip install pandas requests
 
       - name: Run update functions
-        run: python updates/update_data.py
+        run: python update/update_data.py
 
