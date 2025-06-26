@@ -18,6 +18,7 @@ from intialize_schedule_data import initialize_schedule_data
 
 
 def initialize_data():
+    initialize_schedule_data()
     initialize_team_data()
     initialize_coach_data()
     initialize_officials_data()
