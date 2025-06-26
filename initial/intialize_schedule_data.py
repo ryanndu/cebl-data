@@ -9,7 +9,7 @@ import os
 sys.path.append(os.path.join(os.path.dirname(os.path.dirname(__file__)), 'utils'))
 from extract_schedule_data import extract_cebl_schedule
 from helpers import *
-
+from upload_to_releases import upload_to_releases
 
 
 def initialize_schedule_data():
@@ -19,5 +19,6 @@ def initialize_schedule_data():
         schedule = pd.concat([schedule, extract_cebl_schedule(year)], ignore_index=True)
     schedule = clean_schedule_data(schedule)
     schedule.to_csv('cebl_schedule.csv', index=False)
+    upload_to_releases('cebl_schedule.csv', 'schedule')
 
-initialize_schedule_data()
+# initialize_schedule_data()

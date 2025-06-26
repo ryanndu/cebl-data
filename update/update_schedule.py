@@ -9,6 +9,7 @@ import os
 sys.path.append(os.path.join(os.path.dirname(os.path.dirname(__file__)), 'utils'))
 from extract_schedule_data import extract_cebl_schedule
 from helpers import *
+from upload_to_releases import upload_to_releases
 
 def update_schedule_data():
     year = datetime.now().year
@@ -21,5 +22,6 @@ def update_schedule_data():
 
     full_schedule = pd.concat([schedule, current_schedule], ignore_index=True)
     full_schedule.to_csv('cebl_schedule.csv', index=False) # This is where I will save to releases
+    upload_to_releases('cebl_schedule.csv', 'schedule')
 
 update_schedule_data()

@@ -10,6 +10,7 @@ sys.path.append(os.path.join(os.path.dirname(os.path.dirname(__file__)), 'utils'
 from extract_game_data import *
 from extract_schedule_data import extract_cebl_schedule
 from helpers import *
+from upload_to_releases import upload_to_releases
 
 
 def initialize_player_data():
@@ -29,6 +30,7 @@ def initialize_player_data():
             continue
     players = clean_player_data(players)
     players.to_csv('cebl_players.csv', index=False)
+    upload_to_releases('cebl_players.csv', 'player-boxscore')
 
 
 def initialize_team_data():
@@ -48,6 +50,7 @@ def initialize_team_data():
             continue
     teams = clean_team_data(teams)
     teams.to_csv('cebl_teams.csv', index=False)
+    upload_to_releases('cebl_teams.csv', 'team-boxscore')
 
 
 def initialize_coach_data():
@@ -67,6 +70,7 @@ def initialize_coach_data():
             continue
     coaches = clean_coach_data(coaches)
     coaches.to_csv('cebl_coaches.csv', index=False)
+    upload_to_releases('cebl_coaches.csv', 'coaches')
 
 
 def initialize_officials_data():
@@ -109,6 +113,7 @@ def initialize_officials_data_2019():
 def initialize_officials_data_all():
     all_officials = pd.concat([pd.read_csv('cebl_officials.csv'), pd.read_csv('cebl_officials_2019.csv')], ignore_index=True)
     all_officials.to_csv('cebl_officials.csv', index=False)
+    upload_to_releases('cebl_officials.csv', 'officials')
 
 
 def initialize_pbp_data():
@@ -130,6 +135,7 @@ def initialize_pbp_data():
     for season, group_df in pbp.groupby('season'):
         file_name = 'cebl_pbp_' + str(season) + '.csv'
         group_df.to_csv(file_name, index=False)
+        upload_to_releases(file_name, 'pbp')
 
 
 def initialize_pbp_data_2019():
@@ -151,10 +157,11 @@ def initialize_pbp_data_2019():
     new_pbp = clean_pbp_data(new_pbp)
     pbp = pd.concat([pbp, new_pbp], ignore_index=True)
     pbp.to_csv('cebl_pbp_2019.csv', index=False)
+    upload_to_releases('cebl_pbp_2019.csv', 'pbp')
 
 
 # initialize_team_data()
-#initialize_coach_data()
+# initialize_coach_data()
 # initialize_officials_data()
 initialize_officials_data_2019()
 # initialize_officials_data_all()

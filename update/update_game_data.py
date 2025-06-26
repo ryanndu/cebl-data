@@ -11,6 +11,7 @@ sys.path.append(os.path.join(os.path.dirname(os.path.dirname(__file__)), 'utils'
 from extract_schedule_data import extract_cebl_schedule
 from extract_game_data import *
 from helpers import *
+from upload_to_releases import upload_to_releases
 
 def update_pbp_data():
     current_year = datetime.now().year
@@ -38,11 +39,12 @@ def update_pbp_data():
         new_pbp = clean_pbp_data(new_pbp)
     all_pbp = pd.concat([pbp, new_pbp], ignore_index=True)
     all_pbp.to_csv('cebl_pbp_' + str(current_year) + '.csv', index=False)
+    upload_to_releases('cebl_pbp_' + str(current_year) + '.csv', 'pbp')
 
-update_pbp_data()
+# update_pbp_data()
 
 def update_officials_data():
-    officials = pd.read_csv('cebl_all_officials.csv')
+    officials = pd.read_csv('cebl_officials.csv')
     current_year = datetime.now().year
     current_schedule = pd.read_csv('cebl_schedule.csv').query("season == @current_year")
     current_schedule = current_schedule[~current_schedule['fiba_id'].isin(officials['game_id'])]
@@ -63,10 +65,10 @@ def update_officials_data():
     if not new_officials.empty:
         new_officials = clean_officials_data(new_officials)
     all_officials = pd.concat([officials, new_officials], ignore_index=True)
-    all_officials.to_csv('cebl_all_officials.csv', index=False) # I THINK I NEED TO FIGURE OUT THE NAMING FOR OFFICIALS AND PBP WITH THE CSV FILES
+    all_officials.to_csv('cebl_officials.csv', index=False)
+    upload_to_releases('cebl_officials.csv', 'officials')
 
 # update_officials_data()
-
 
 def update_coaches_data():
     coaches = pd.read_csv('cebl_coaches.csv')
@@ -93,6 +95,7 @@ def update_coaches_data():
     
     all_coaches = pd.concat([coaches, new_coaches], ignore_index=True)
     all_coaches.to_csv('cebl_coaches.csv', index=False)
+    upload_to_releases('cebl_coaches.csv', 'coaches')
 
 # update_coaches_data()
 
@@ -121,6 +124,7 @@ def update_players_data():
     
     all_players = pd.concat([players, new_players], ignore_index=True)
     all_players.to_csv('cebl_players.csv', index=False)
+    upload_to_releases('cebl_players.csv', 'player-boxscore')
 
 # update_players_data()
 
@@ -147,5 +151,6 @@ def update_team_data():
         new_teams = clean_team_data(new_teams)
     all_teams = pd.concat([teams, new_teams], ignore_index=True)
     all_teams.to_csv('cebl_teams.csv', index=False)
+    upload_to_releases('cebl_teams.csv', 'team-boxscore')
 
-# update_team_data()
+update_team_data()

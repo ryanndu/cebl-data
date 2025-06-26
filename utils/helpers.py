@@ -177,7 +177,7 @@ def clean_team_data(teams):
         A cleaned DataFrame with standardized column names, complete structure, and
         normalized time and lead values.
     """
-    team_df = team_df.clean_names(case_type="snake")
+    teams = teams.clean_names(case_type="snake")
 
     columns = [
         'game_id', 'season', 'name', 'short_name', 'code', 'score', 'tot_s_minutes', 'tot_s_field_goals_made', 'tot_s_field_goals_attempted',
@@ -196,7 +196,7 @@ def clean_team_data(teams):
     ]
 
     for column in columns:
-        if column not in team_df:
+        if column not in teams:
             teams[column] = pd.NA
 
     teams = teams[columns]
