@@ -15,9 +15,10 @@ from upload_to_releases import upload_to_releases
 
 def update_pbp_data():
     current_year = datetime.now().year
-    current_schedule = pd.read_csv('cebl_schedule.csv').query("season == @current_year")
+    current_schedule = pd.read_csv('https://github.com/ryanndu/cebl-data/releases/download/schedule/cebl_schedule.csv')
+    current_schedule = current_schedule.query("season == @current_year")
     try:
-        pbp = pd.read_csv('cebl_pbp_' + str(current_year) + '.csv')
+        pbp = pd.read_csv('https://github.com/ryanndu/cebl-data/releases/download/pbp/' + 'cebl_pbp_' + str(current_year) + '.csv')
         current_schedule = current_schedule[~current_schedule['fiba_id'].isin(pbp['game_id'])]
     except Exception as e:
         pbp = pd.DataFrame()
@@ -44,9 +45,10 @@ def update_pbp_data():
 # update_pbp_data()
 
 def update_officials_data():
-    officials = pd.read_csv('cebl_officials.csv')
+    officials = pd.read_csv('https://github.com/ryanndu/cebl-data/releases/download/officials/cebl_officials.csv')
     current_year = datetime.now().year
-    current_schedule = pd.read_csv('cebl_schedule.csv').query("season == @current_year")
+    current_schedule = pd.read_csv('https://github.com/ryanndu/cebl-data/releases/download/schedule/cebl_schedule.csv')
+    current_schedule = current_schedule.query("season == @current_year")
     current_schedule = current_schedule[~current_schedule['fiba_id'].isin(officials['game_id'])]
 
     new_officials = pd.DataFrame()
@@ -71,9 +73,10 @@ def update_officials_data():
 # update_officials_data()
 
 def update_coaches_data():
-    coaches = pd.read_csv('cebl_coaches.csv')
+    coaches = pd.read_csv('https://github.com/ryanndu/cebl-data/releases/download/coaches/cebl_coaches.csv')
     current_year = datetime.now().year
-    current_schedule = pd.read_csv('cebl_schedule.csv').query("season == @current_year")
+    current_schedule = pd.read_csv('https://github.com/ryanndu/cebl-data/releases/download/schedule/cebl_schedule.csv')
+    current_schedule = current_schedule.query("season == @current_year")
     current_schedule = current_schedule[~current_schedule['fiba_id'].isin(coaches['game_id'])]
 
     new_coaches = pd.DataFrame()
@@ -100,9 +103,10 @@ def update_coaches_data():
 # update_coaches_data()
 
 def update_players_data():
-    players = pd.read_csv('cebl_players.csv')
+    players = pd.read_csv('https://github.com/ryanndu/cebl-data/releases/download/player-boxscore/cebl_players.csv')
     current_year = datetime.now().year
-    current_schedule = pd.read_csv('cebl_schedule.csv').query("season == @current_year")
+    current_schedule = pd.read_csv('https://github.com/ryanndu/cebl-data/releases/download/schedule/cebl_schedule.csv')
+    current_schedule = current_schedule.query("season == @current_year")
     current_schedule = current_schedule[~current_schedule['fiba_id'].isin(players['game_id'])]
 
     new_players = pd.DataFrame()
@@ -129,9 +133,10 @@ def update_players_data():
 # update_players_data()
 
 def update_team_data():
-    teams = pd.read_csv('cebl_teams.csv')
+    teams = pd.read_csv('https://github.com/ryanndu/cebl-data/releases/download/team-boxscore/cebl_teams.csv')
     current_year = datetime.now().year
-    current_schedule = pd.read_csv('cebl_schedule.csv').query("season == @current_year")
+    current_schedule = pd.read_csv('https://github.com/ryanndu/cebl-data/releases/download/schedule/cebl_schedule.csv')
+    current_schedule = current_schedule.query("season == @current_year")
     current_schedule = current_schedule[~current_schedule['fiba_id'].isin(teams['game_id'])]
 
     new_teams = pd.DataFrame()
@@ -153,4 +158,4 @@ def update_team_data():
     all_teams.to_csv('cebl_teams.csv', index=False)
     upload_to_releases('cebl_teams.csv', 'team-boxscore')
 
-update_team_data()
+# update_team_data()

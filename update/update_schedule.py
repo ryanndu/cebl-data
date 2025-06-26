@@ -13,7 +13,7 @@ from upload_to_releases import upload_to_releases
 
 def update_schedule_data():
     year = datetime.now().year
-    schedule = pd.read_csv('cebl_schedule.csv')
+    schedule = pd.read_csv('https://github.com/ryanndu/cebl-data/releases/download/schedule/cebl_schedule.csv')
     current_schedule = extract_cebl_schedule(year)
     current_schedule = current_schedule[~current_schedule['fiba_id'].isin(schedule['fiba_id'])]
     current_schedule = current_schedule.query("status == 'COMPLETE'")
