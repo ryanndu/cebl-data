@@ -42,8 +42,6 @@ def update_pbp_data():
     all_pbp.to_csv('cebl_pbp_' + str(current_year) + '.csv', index=False)
     upload_to_releases('cebl_pbp_' + str(current_year) + '.csv', 'pbp')
 
-# update_pbp_data()
-
 def update_officials_data():
     officials = pd.read_csv('https://github.com/ryanndu/cebl-data/releases/download/officials/cebl_officials.csv')
     current_year = datetime.now().year
@@ -69,8 +67,6 @@ def update_officials_data():
     all_officials = pd.concat([officials, new_officials], ignore_index=True)
     all_officials.to_csv('cebl_officials.csv', index=False)
     upload_to_releases('cebl_officials.csv', 'officials')
-
-# update_officials_data()
 
 def update_coaches_data():
     coaches = pd.read_csv('https://github.com/ryanndu/cebl-data/releases/download/coaches/cebl_coaches.csv')
@@ -100,8 +96,6 @@ def update_coaches_data():
     all_coaches.to_csv('cebl_coaches.csv', index=False)
     upload_to_releases('cebl_coaches.csv', 'coaches')
 
-# update_coaches_data()
-
 def update_players_data():
     players = pd.read_csv('https://github.com/ryanndu/cebl-data/releases/download/player-boxscore/cebl_players.csv')
     current_year = datetime.now().year
@@ -130,8 +124,6 @@ def update_players_data():
     all_players.to_csv('cebl_players.csv', index=False)
     upload_to_releases('cebl_players.csv', 'player-boxscore')
 
-# update_players_data()
-
 def update_team_data():
     teams = pd.read_csv('https://github.com/ryanndu/cebl-data/releases/download/team-boxscore/cebl_teams.csv')
     current_year = datetime.now().year
@@ -157,5 +149,3 @@ def update_team_data():
     all_teams = pd.concat([teams, new_teams], ignore_index=True)
     all_teams.to_csv('cebl_teams.csv', index=False)
     upload_to_releases('cebl_teams.csv', 'team-boxscore')
-
-# update_team_data()

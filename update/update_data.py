@@ -13,7 +13,7 @@ from helpers import *
 from upload_to_releases import upload_to_releases
 
 from update_game_data import update_pbp_data, update_officials_data, update_coaches_data, update_players_data, update_team_data
-from update_schedule import update_schedule_data
+from update_schedule_data import update_schedule_data
 
 def update_data():
     update_schedule_data()

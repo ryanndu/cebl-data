@@ -15,7 +15,7 @@ from upload_to_releases import upload_to_releases
 
 def initialize_player_data():
     players = pd.DataFrame()
-    schedule = pd.read_csv('cebl_schedule.csv')
+    schedule = pd.read_csv('cebl_schedule.csv') # change to pull form release
     for _, row in schedule.iterrows():
         json_url = row['fiba_json_url']
         game_id = re.search(r'/data/(\d+)/data\.json', json_url).group(1)
@@ -158,13 +158,3 @@ def initialize_pbp_data_2019():
     pbp = pd.concat([pbp, new_pbp], ignore_index=True)
     pbp.to_csv('cebl_pbp_2019.csv', index=False)
     upload_to_releases('cebl_pbp_2019.csv', 'pbp')
-
-
-# initialize_team_data()
-# initialize_coach_data()
-# initialize_officials_data()
-initialize_officials_data_2019()
-# initialize_officials_data_all()
-# initialize_pbp_data()
-# initialize_pbp_data_2019()
-# initialize_player_data()

@@ -20,5 +20,3 @@ def initialize_schedule_data():
     schedule = clean_schedule_data(schedule)
     schedule.to_csv('cebl_schedule.csv', index=False)
     upload_to_releases('cebl_schedule.csv', 'schedule')
-
-# initialize_schedule_data()

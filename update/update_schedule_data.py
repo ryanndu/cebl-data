@@ -23,5 +23,3 @@ def update_schedule_data():
     full_schedule = pd.concat([schedule, current_schedule], ignore_index=True)
     full_schedule.to_csv('cebl_schedule.csv', index=False) # This is where I will save to releases
     upload_to_releases('cebl_schedule.csv', 'schedule')
-
-update_schedule_data()
