@@ -15,7 +15,7 @@ from upload_to_releases import upload_to_releases
 
 def initialize_player_data():
     players = pd.DataFrame()
-    schedule = pd.read_csv('cebl_schedule.csv') # change to pull form release
+    schedule = pd.read_csv('https://github.com/ryanndu/cebl-data/releases/download/schedule/cebl_schedule.csv')
     for _, row in schedule.iterrows():
         json_url = row['fiba_json_url']
         game_id = re.search(r'/data/(\d+)/data\.json', json_url).group(1)
@@ -35,7 +35,7 @@ def initialize_player_data():
 
 def initialize_team_data():
     teams = pd.DataFrame()
-    schedule = pd.read_csv('cebl_schedule.csv')
+    schedule = pd.read_csv('https://github.com/ryanndu/cebl-data/releases/download/schedule/cebl_schedule.csv')
     for _, row in schedule.iterrows():
         json_url = row['fiba_json_url']
         game_id = re.search(r'/data/(\d+)/data\.json', json_url).group(1)
@@ -55,7 +55,7 @@ def initialize_team_data():
 
 def initialize_coach_data():
     coaches = pd.DataFrame()
-    schedule = pd.read_csv('cebl_schedule.csv')
+    schedule = pd.read_csv('https://github.com/ryanndu/cebl-data/releases/download/schedule/cebl_schedule.csv')
     for _, row in schedule.iterrows():
         json_url = row['fiba_json_url']
         game_id = re.search(r'/data/(\d+)/data\.json', json_url).group(1)
@@ -75,7 +75,7 @@ def initialize_coach_data():
 
 def initialize_officials_data():
     officials = pd.DataFrame()
-    schedule = pd.read_csv('cebl_schedule.csv')
+    schedule = pd.read_csv('https://github.com/ryanndu/cebl-data/releases/download/schedule/cebl_schedule.csv')
     for _, row in schedule.iterrows():
         json_url = row['fiba_json_url']
         game_id = re.search(r'/data/(\d+)/data\.json', json_url).group(1)
@@ -94,7 +94,8 @@ def initialize_officials_data():
 
 def initialize_officials_data_2019():
     officials = pd.DataFrame()
-    schedule = pd.read_csv('cebl_schedule.csv').query('season == 2019')
+    schedule = pd.read_csv('https://github.com/ryanndu/cebl-data/releases/download/schedule/cebl_schedule.csv')
+    schedule = schedule.query('season == 2019')
     for _, row in schedule.iterrows():
         json_url = row['fiba_json_url']
         game_id = re.search(r'/data/(\d+)/data\.json', json_url).group(1)
@@ -118,7 +119,7 @@ def initialize_officials_data_all():
 
 def initialize_pbp_data():
     pbp = pd.DataFrame()
-    schedule = pd.read_csv('cebl_schedule.csv')
+    schedule = pd.read_csv('https://github.com/ryanndu/cebl-data/releases/download/schedule/cebl_schedule.csv')
     for _, row in schedule.iterrows():
         json_url = row['fiba_json_url']
         game_id = re.search(r'/data/(\d+)/data\.json', json_url).group(1)
@@ -140,7 +141,8 @@ def initialize_pbp_data():
 
 def initialize_pbp_data_2019():
     pbp = pd.read_csv('cebl_pbp_2019.csv')
-    schedule = extract_cebl_schedule(2019)
+    schedule = pd.read_csv('https://github.com/ryanndu/cebl-data/releases/download/schedule/cebl_schedule.csv')
+    schedule = schedule.query('season == 2019')
     new_pbp = pd.DataFrame()
     for _, row in schedule.iterrows():
         json_url = row['fiba_json_url']
