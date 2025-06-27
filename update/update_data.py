@@ -16,6 +16,13 @@ from update_game_data import update_pbp_data, update_officials_data, update_coac
 from update_schedule_data import update_schedule_data
 
 def update_data():
+    """
+    Runs all the update functions sequentially.
+
+    Returns
+    -------
+    None
+    """
     update_schedule_data()
     update_pbp_data()
     update_officials_data()

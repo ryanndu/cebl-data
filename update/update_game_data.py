@@ -1,19 +1,25 @@
 import pandas as pd
-from datetime import datetime
-import re
 import requests
+import re
+from datetime import datetime
 
 import sys
 import os
 
 sys.path.append(os.path.join(os.path.dirname(os.path.dirname(__file__)), 'utils'))
-
 from extract_schedule_data import extract_cebl_schedule
 from extract_game_data import *
 from helpers import *
 from upload_to_releases import upload_to_releases
 
 def update_pbp_data():
+    """
+    Updates the pbp data for the current year with new games from the current season.
+
+    Returns
+    -------
+    None
+    """
     current_year = datetime.now().year
     current_schedule = pd.read_csv('https://github.com/ryanndu/cebl-data/releases/download/schedule/cebl_schedule.csv')
     current_schedule = current_schedule.query("season == @current_year")
@@ -43,6 +49,13 @@ def update_pbp_data():
     upload_to_releases('cebl_pbp_' + str(current_year) + '.csv', 'pbp')
 
 def update_officials_data():
+    """
+    Updates the officials data with new games from the current season.
+
+    Returns
+    -------
+    None
+    """
     officials = pd.read_csv('https://github.com/ryanndu/cebl-data/releases/download/officials/cebl_officials.csv')
     current_year = datetime.now().year
     current_schedule = pd.read_csv('https://github.com/ryanndu/cebl-data/releases/download/schedule/cebl_schedule.csv')
@@ -69,6 +82,13 @@ def update_officials_data():
     upload_to_releases('cebl_officials.csv', 'officials')
 
 def update_coaches_data():
+    """
+    Updates the coaches data with new games from the current season.
+
+    Returns
+    -------
+    None
+    """
     coaches = pd.read_csv('https://github.com/ryanndu/cebl-data/releases/download/coaches/cebl_coaches.csv')
     current_year = datetime.now().year
     current_schedule = pd.read_csv('https://github.com/ryanndu/cebl-data/releases/download/schedule/cebl_schedule.csv')
@@ -97,6 +117,13 @@ def update_coaches_data():
     upload_to_releases('cebl_coaches.csv', 'coaches')
 
 def update_players_data():
+    """
+    Updates the players box score data with new games from the current season.
+
+    Returns
+    -------
+    None
+    """
     players = pd.read_csv('https://github.com/ryanndu/cebl-data/releases/download/player-boxscore/cebl_players.csv')
     current_year = datetime.now().year
     current_schedule = pd.read_csv('https://github.com/ryanndu/cebl-data/releases/download/schedule/cebl_schedule.csv')
@@ -125,6 +152,13 @@ def update_players_data():
     upload_to_releases('cebl_players.csv', 'player-boxscore')
 
 def update_team_data():
+    """
+    Updates the team box score data with new games from the current season.
+
+    Returns
+    -------
+    None
+    """
     teams = pd.read_csv('https://github.com/ryanndu/cebl-data/releases/download/team-boxscore/cebl_teams.csv')
     current_year = datetime.now().year
     current_schedule = pd.read_csv('https://github.com/ryanndu/cebl-data/releases/download/schedule/cebl_schedule.csv')
