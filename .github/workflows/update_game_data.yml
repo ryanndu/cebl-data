@@ -25,5 +25,9 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run update functions
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_OWNER: ${{ github.repository_owner }}
+          GITHUB_REPO: ${{ github.event.repository.name }}
         run: python update/update_data.py
 
