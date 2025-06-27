@@ -1,8 +1,8 @@
 import pandas as pd
 import requests
 import re
-import janitor
 from datetime import datetime
+import janitor
 
 import sys
 import os
@@ -18,6 +18,13 @@ from intialize_schedule_data import initialize_schedule_data
 
 
 def initialize_data():
+    """
+    Runs all the initialize functions sequentially.
+
+    Returns
+    -------
+    None
+    """
     initialize_schedule_data()
     initialize_team_data()
     initialize_coach_data()

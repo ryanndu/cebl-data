@@ -13,6 +13,13 @@ from upload_to_releases import upload_to_releases
 
 
 def initialize_schedule_data():
+    """
+    Initialize and stores the schedule data with games from 2019 to the current year - 1.
+
+    Returns 
+    -------
+    None
+    """
     schedule = pd.DataFrame()
     year = datetime.now().year
     for year in range(2019, year):

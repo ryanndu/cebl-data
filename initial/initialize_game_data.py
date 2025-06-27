@@ -12,8 +12,14 @@ from extract_schedule_data import extract_cebl_schedule
 from helpers import *
 from upload_to_releases import upload_to_releases
 
-
 def initialize_player_data():
+    """
+    Initializes and stores player boxscore data from all games in the schedule.
+
+    Returns
+    -------
+    None
+    """
     players = pd.DataFrame()
     schedule = pd.read_csv('https://github.com/ryanndu/cebl-data/releases/download/schedule/cebl_schedule.csv')
     for _, row in schedule.iterrows():
@@ -32,8 +38,14 @@ def initialize_player_data():
     players.to_csv('cebl_players.csv', index=False)
     upload_to_releases('cebl_players.csv', 'player-boxscore')
 
-
 def initialize_team_data():
+    """
+    Initializes and stores team boxscore data from all games in the schedule.
+
+    Returns
+    -------
+    None
+    """
     teams = pd.DataFrame()
     schedule = pd.read_csv('https://github.com/ryanndu/cebl-data/releases/download/schedule/cebl_schedule.csv')
     for _, row in schedule.iterrows():
@@ -52,8 +64,14 @@ def initialize_team_data():
     teams.to_csv('cebl_teams.csv', index=False)
     upload_to_releases('cebl_teams.csv', 'team-boxscore')
 
-
 def initialize_coach_data():
+    """
+    Initializes and stores coaches data from all games in the schedule.
+
+    Returns
+    -------
+    None
+    """
     coaches = pd.DataFrame()
     schedule = pd.read_csv('https://github.com/ryanndu/cebl-data/releases/download/schedule/cebl_schedule.csv')
     for _, row in schedule.iterrows():
@@ -72,8 +90,14 @@ def initialize_coach_data():
     coaches.to_csv('cebl_coaches.csv', index=False)
     upload_to_releases('cebl_coaches.csv', 'coaches')
 
-
 def initialize_officials_data():
+    """
+    Initializes and stores officials data from all games in the schedule.
+
+    Returns
+    -------
+    None
+    """
     officials = pd.DataFrame()
     schedule = pd.read_csv('https://github.com/ryanndu/cebl-data/releases/download/schedule/cebl_schedule.csv')
     for _, row in schedule.iterrows():
@@ -90,9 +114,16 @@ def initialize_officials_data():
             continue
     officials = clean_officials_data(officials)
     officials.to_csv('cebl_officials.csv', index=False)
-
+    upload_to_releases('cebl_officials.csv', 'officials')
 
 def initialize_officials_data_2019():
+    """
+    Initializes and stores officials data from all games in the schedule during 2019.
+
+    Returns
+    -------
+    None
+    """
     officials = pd.DataFrame()
     schedule = pd.read_csv('https://github.com/ryanndu/cebl-data/releases/download/schedule/cebl_schedule.csv')
     schedule = schedule.query('season == 2019')
@@ -109,15 +140,31 @@ def initialize_officials_data_2019():
             print(f'Error for game_id {game_id}: {e}')
             continue
     officials.to_csv('cebl_officials_2019.csv', index=False)
+    upload_to_releases('cebl_officials_2019.csv', 'officials') # The 2019 version got deleted after since data got combined into one csv
 
 
 def initialize_officials_data_all():
-    all_officials = pd.concat([pd.read_csv('cebl_officials.csv'), pd.read_csv('cebl_officials_2019.csv')], ignore_index=True)
+    """
+    Initializes and stores officials data by combining the 2019 officials data with the rest of the officials data.
+
+    Returns
+    -------
+    None
+    """
+    all_officials = pd.concat([pd.read_csv('https://github.com/ryanndu/cebl-data/releases/download/officials/cebl_officials.csv'), 
+                               pd.read_csv('https://github.com/ryanndu/cebl-data/releases/download/officials/cebl_officials_2019.csv')], ignore_index=True)
     all_officials.to_csv('cebl_officials.csv', index=False)
     upload_to_releases('cebl_officials.csv', 'officials')
 
 
 def initialize_pbp_data():
+    """
+    Initializes and stores play by play data from all games in the schedule seperated by year.
+
+    Returns
+    -------
+    None
+    """
     pbp = pd.DataFrame()
     schedule = pd.read_csv('https://github.com/ryanndu/cebl-data/releases/download/schedule/cebl_schedule.csv')
     for _, row in schedule.iterrows():
@@ -140,6 +187,13 @@ def initialize_pbp_data():
 
 
 def initialize_pbp_data_2019():
+    """
+    Initializes and stores play by play data from all games in the schedule during 2019.
+
+    Returns
+    -------
+    None
+    """
     pbp = pd.read_csv('cebl_pbp_2019.csv')
     schedule = pd.read_csv('https://github.com/ryanndu/cebl-data/releases/download/schedule/cebl_schedule.csv')
     schedule = schedule.query('season == 2019')
