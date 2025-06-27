@@ -2,7 +2,7 @@ name: Update CEBL game data
 
 on: 
   schedule:
-    - cron: "5 4 * * *" # Runs daily at 4:05 AM UTC
+    - cron: "5 4 * 5-8 *" # Runs daily at 4:05 AM UTC from May through August
   workflow_dispatch: # Allows manual triggering
 
 jobs:
