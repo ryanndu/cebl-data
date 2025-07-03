@@ -108,7 +108,9 @@ def clean_player_data(players):
 
     players['player_name'] = players['first_name'] + ' ' + players['last_name']
     players['captain'] = players['captain'].fillna(False)
-    players['captain'] = players['captain'].replace('1.0', True)
+    players['captain'] = players['captain'].replace({'False': False, '1.0': True})
+    players['active'] = players['active'].astype(bool)
+    players['starter'] = players['starter'].astype(bool)  
     
     columns = [
         'game_id', 'season', 'team_name', 'player_number', 'player_name', 'position', 'minutes', 'points', 'field_goals_made', 
