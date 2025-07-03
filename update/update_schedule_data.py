@@ -24,5 +24,6 @@ def update_schedule_data():
         current_schedule = clean_schedule_data(current_schedule)
 
     full_schedule = pd.concat([schedule, current_schedule], ignore_index=True)
+    full_schedule = clean_schedule_data(full_schedule)
     full_schedule.to_csv('cebl_schedule.csv', index=False)
     upload_to_releases('cebl_schedule.csv', 'schedule')
