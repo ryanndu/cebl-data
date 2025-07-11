@@ -3,6 +3,7 @@ import requests
 import re
 import helpers as h
 
+
 def extract_cebl_schedule(year):
     """
     Extracts the CEBL game schedule for a given year from JSON.

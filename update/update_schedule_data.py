@@ -11,6 +11,7 @@ from extract_schedule_data import extract_cebl_schedule
 from helpers import *
 from upload_to_releases import upload_to_releases
 
+
 def update_schedule_data():
     """
     Updates the schedule data with new completed games for the current season.

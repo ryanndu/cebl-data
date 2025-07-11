@@ -12,6 +12,7 @@ from extract_game_data import *
 from helpers import *
 from upload_to_releases import upload_to_releases
 
+
 def update_pbp_data():
     """
     Updates the pbp data for the current year with new games from the current season.
@@ -48,6 +49,7 @@ def update_pbp_data():
     all_pbp.to_csv('cebl_pbp_' + str(current_year) + '.csv', index=False)
     upload_to_releases('cebl_pbp_' + str(current_year) + '.csv', 'pbp')
 
+
 def update_officials_data():
     """
     Updates the officials data with new games from the current season.
@@ -80,6 +82,7 @@ def update_officials_data():
     all_officials = pd.concat([officials, new_officials], ignore_index=True)
     all_officials.to_csv('cebl_officials.csv', index=False)
     upload_to_releases('cebl_officials.csv', 'officials')
+
 
 def update_coaches_data():
     """
@@ -116,6 +119,7 @@ def update_coaches_data():
     all_coaches.to_csv('cebl_coaches.csv', index=False)
     upload_to_releases('cebl_coaches.csv', 'coaches')
 
+
 def update_players_data():
     """
     Updates the players box score data with new games from the current season.
@@ -148,8 +152,10 @@ def update_players_data():
         new_players = clean_player_data(new_players)
     
     all_players = pd.concat([players, new_players], ignore_index=True)
+    all_players = clean_player_data(all_players)
     all_players.to_csv('cebl_players.csv', index=False)
     upload_to_releases('cebl_players.csv', 'player-boxscore')
+
 
 def update_team_data():
     """

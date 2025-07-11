@@ -27,7 +27,6 @@ def extract_player_data(json):
 
     players['game_id'] = json['game_id']
     players['season'] = json['season']
-
     return players
 
 
@@ -53,7 +52,6 @@ def extract_officials_data(json):
     officials = pd.json_normalize(officials_list).clean_names(case_type='snake')
     officials['game_id'] = json['game_id']
     officials['season'] = json['season']
-
     return officials
 
 
@@ -97,7 +95,6 @@ def extract_officials_data_2019(json):
         }])
         
         officials = pd.concat([officials, new_officials], ignore_index=True)
-
     return officials
 
 
@@ -124,7 +121,6 @@ def extract_team_data(json):
 
     teams['game_id'] = json['game_id']
     teams['season'] = json['season']
-
     return teams
 
 
@@ -166,7 +162,6 @@ def extract_coach_data(json):
     
     coaches['game_id'] = json['game_id']
     coaches['season'] = json['season']
-    
     return coaches
 
 
@@ -203,7 +198,6 @@ def extract_pbp_data(json):
         on='action_number',
         how='left'
     )
-
     return pbp
 
 
