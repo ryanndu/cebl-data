@@ -35,5 +35,5 @@ def upload_to_releases(file_path, tag):
         if asset.name == filename:
             asset.delete_asset()
             break
-    
+        
     release.upload_asset(file_path)
