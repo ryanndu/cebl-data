@@ -109,6 +109,7 @@ def clean_player_data(players):
     players['player_name'] = players['first_name'] + ' ' + players['last_name']
     players['captain'] = players['captain'].fillna(False)
     players['captain'] = players['captain'].replace({'False': False, '1.0': True})
+    players['captain'] = players['captain'].astype(bool)
     players['active'] = players['active'].astype(bool)
     players['starter'] = players['starter'].astype(bool)  
     
@@ -339,6 +340,9 @@ def clean_pbp_data(pbp):
     }
     pbp = pbp.rename(columns=column_mapping)
 
+    # pbp['success'] = pbp['success'].replace({1 : True, 0: False})
+    # pbp['scoring'] = pbp['scoring'].replace({1 : True, 0: False})
+
     column_start = [
         'game_id', 'season', 'game_time', 'home_score', 'away_score', 'home_lead', 'team_id',
         'period', 'period_type', 'player_id', 'scoreboard_name', 'success', 
@@ -352,5 +356,5 @@ def clean_pbp_data(pbp):
         'international_first_name_initial', 'international_last_name_initial'
     ]
     columns = column_start + qualifier_columns + column_end
-
+    
     return pbp[columns]
