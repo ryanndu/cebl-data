@@ -3,3 +3,8 @@
 __pycache__/
 .pytest_cache/
 .ruff_cache/
+
+*.parquet
+*.csv
+schedule_*.json
+old_code/
