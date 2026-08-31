@@ -5,6 +5,11 @@
     "stats_url_en": "fiba_stats_url_en",
     "stats_url_fr": "fiba_stats_url_fr"
   },
+  "dropped": [
+    "home_team_logo_url",
+    "away_team_logo_url",
+    "broadcast_partner_logo_urls"
+  ],
   "dtypes": {
     "season": "int16",
     "fiba_game_id": "string",
@@ -20,8 +25,6 @@
     "away_team_id": "string",
     "away_team_name": "string",
     "away_team_score": "Int16",
-    "home_team_logo_url": "string",
-    "away_team_logo_url": "string",
     "home_team_stats_url_en": "string",
     "home_team_stats_url_fr": "string",
     "away_team_stats_url_en": "string",
@@ -31,7 +34,6 @@
     "cebl_stats_url_en": "string",
     "cebl_stats_url_fr": "string",
     "tickets_url_en": "string",
-    "tickets_url_fr": "string",
-    "broadcast_partner_logo_urls": "object"
+    "tickets_url_fr": "string"
   }
 }

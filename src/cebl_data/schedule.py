@@ -73,8 +73,14 @@ def build_schedule(payload: list[dict], season: int) -> pd.DataFrame:
         raise ValueError(f"No games returned for season {season}")
 
     config = load_packaged_config("schedule.json")
+    known = set(config["rename"]) | set(config["dropped"]) | set(config["dtypes"])
+
 
     schedule = pd.DataFrame(payload)
+    unexpected = set(schedule.columns) - known
+    if unexpected:
+        print(f"{season}: unexpected fields {sorted(unexpected)}")
+
     schedule["season"] = season
     schedule["fiba_game_id"] = schedule["stats_url_en"].map(extract_fiba_id)
     schedule = schedule.rename(columns=config["rename"])
@@ -92,9 +98,3 @@ def get_schedule(seasons: list[int]) -> pd.DataFrame:
     """
     schedules = [build_schedule(fetch_schedule(season), season) for season in seasons]
     return pd.concat(schedules, ignore_index=True)
-
-
-
-if __name__ == "__main__":
-    schedule = get_schedule(list(range(2019, 2027)))
-    schedule.to_parquet("schedule.parquet", index=False)
