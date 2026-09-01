@@ -8,3 +8,4 @@ __pycache__/
 *.csv
 schedule_*.json
 old_code/
+cache
