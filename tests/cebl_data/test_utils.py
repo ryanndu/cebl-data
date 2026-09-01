@@ -1,5 +1,4 @@
 import pandas as pd
-import pytest
 
 from cebl_data.utils import clean_strings, unescape
 

@@ -1,9 +1,15 @@
-import requests
+import datetime
 
 import pandas as pd
+import requests
 from dotenv import load_dotenv
 
-from cebl_data.games import build_pbp, build_player_boxscore, build_team_boxscore, fetch_game
+from cebl_data.games import (
+    build_pbp,
+    build_player_boxscore,
+    build_team_boxscore,
+    fetch_game,
+)
 from cebl_data.schedule import get_schedule
 from cebl_data.storage import read_published, write_published
 
@@ -124,11 +130,22 @@ def update_pbp(schedule: pd.DataFrame) -> None:
     write_published(pbp, "pbp")
 
 
+def update_all(seasons: list[int]) -> None:
+    """Refreshes every published dataset.
+
+    The schedule is refreshed only for the given seasons, but the game
+    datasets reconcile against the whole schedule, so a game missed in an
+    earlier season is still picked up.
+
+    Args:
+        seasons (list[int]): The seasons to refresh, as four-digit years.
+    """
+    schedule = update_schedule(seasons)
+    update_team_boxscore(schedule)
+    update_player_boxscore(schedule)
+    update_pbp(schedule)
+
+
 if __name__ == "__main__":
     load_dotenv()
-    seasons = [2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026]
-    schedule = update_schedule(seasons)
-    #update_team_boxscore(schedule)
-    #update_player_boxscore(schedule)
-    update_pbp(schedule)
-   
+    update_all([datetime.datetime.now(datetime.UTC).year])
