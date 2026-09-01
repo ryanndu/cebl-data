@@ -51,11 +51,11 @@
     "p3_score": "period_3_score",
     "p4_score": "period_4_score",
     "ot_score": "overtime_score",
-    "tot_eff_1": "team_index_rating_1",
-    "tot_eff_2": "team_index_rating_2",
-    "tot_eff_3": "team_index_rating_3",
-    "tot_eff_4": "team_index_rating_4",
-    "tot_eff_5": "team_index_rating_5"
+    "tot_eff_1": "team_efficiency_rating_1",
+    "tot_eff_2": "team_efficiency_rating_2",
+    "tot_eff_3": "team_efficiency_rating_3",
+    "tot_eff_4": "team_efficiency_rating_4",
+    "tot_eff_5": "team_efficiency_rating_5"
   },
   "dropped": [
     "nameInternational", "codeInternational", "shortName",
@@ -120,10 +120,10 @@
     "biggest_scoring_run": "Int16",
     "lead_changes": "Int16",
     "times_scores_level": "Int16",
-    "team_index_rating_1": "Float64",
-    "team_index_rating_2": "Float64",
-    "team_index_rating_3": "Float64",
-    "team_index_rating_4": "Float64",
-    "team_index_rating_5": "Float64"
+    "team_efficiency_rating_1": "Float64",
+    "team_efficiency_rating_2": "Float64",
+    "team_efficiency_rating_3": "Float64",
+    "team_efficiency_rating_4": "Float64",
+    "team_efficiency_rating_5": "Float64"
   }
 }

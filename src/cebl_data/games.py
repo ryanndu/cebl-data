@@ -46,11 +46,6 @@ def parse_minutes(value: str) -> float | None:
 def build_team_boxscore(payload: dict, game) -> pd.DataFrame:
     """Builds the team box score for one game.
 
-    One row per team. Team totals lose their ``tot_s`` prefix so the columns
-        match the player boxscore. Team ids come from the schedule, since the game
-        payload identifies teams only by name and code. Fields the config doesn't
-        account for are reported to stdout so changes to the source are visible.
-
     Args:
         payload (dict): A raw game payload.
         game: A row from the schedule DataFrame.
@@ -81,5 +76,46 @@ def build_team_boxscore(payload: dict, game) -> pd.DataFrame:
 
     box_score = pd.DataFrame(teams).rename(columns=config["rename"])
     box_score["minutes"] = box_score["minutes"].map(parse_minutes)
+    box_score = clean_strings(box_score)
+    return box_score.reindex(columns=list(config["dtypes"])).astype(config["dtypes"])
+
+
+def build_player_boxscore(payload: dict, game) -> pd.DataFrame:
+    """Builds the player box score for one game.
+
+    Args:
+        payload (dict): A raw game payload.
+        game: A row from the schedule DataFrame.
+
+    Returns:
+        pd.DataFrame: A DataFrame with one row per player.
+    """
+    config = load_packaged_config("player_boxscore.json")
+    known = set(config["rename"]) | set(config["dropped"]) | set(config["dtypes"])
+
+    players = []
+    for team_number, team in payload["tm"].items():
+        is_home = team_number == "1"
+        for player_number, player in team["pl"].items():
+            unexpected = set(player) - known
+            if unexpected:
+                print(f"{game.fiba_game_id}: unexpected fields {sorted(unexpected)}")
+
+            row = {
+                field: value
+                for field, value in player.items()
+                if not isinstance(value, (dict, list))
+            }
+            row["fiba_game_id"] = game.fiba_game_id
+            row["season"] = game.season
+            row["is_home"] = is_home
+            row["team_id"] = game.home_team_id if is_home else game.away_team_id
+            row["game_player_number"] = str(player_number)
+            row["captain"] = bool(player.get("captain", 0))
+            players.append(row)
+
+    box_score = pd.DataFrame(players).rename(columns=config["rename"])
+    box_score["minutes"] = box_score["minutes"].map(parse_minutes)
+    box_score["playing_position"] = box_score["playing_position"].str.upper()
     box_score = clean_strings(box_score)
     return box_score.reindex(columns=list(config["dtypes"])).astype(config["dtypes"])

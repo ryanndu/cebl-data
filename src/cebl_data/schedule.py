@@ -84,6 +84,7 @@ def build_schedule(payload: list[dict], season: int) -> pd.DataFrame:
     schedule["season"] = season
     schedule["fiba_game_id"] = schedule["stats_url_en"].map(extract_fiba_id)
     schedule = schedule.rename(columns=config["rename"])
+    schedule["status"] = schedule["status"].replace({"CANELLED": "CANCELLED"})
     return schedule[list(config["dtypes"])].astype(config["dtypes"])
 
 
