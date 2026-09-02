@@ -1,5 +1,6 @@
 import html
 import json
+import re
 from importlib.resources import files
 
 import pandas as pd
@@ -40,6 +41,7 @@ def clean_strings(frame: pd.DataFrame) -> pd.DataFrame:
             frame[column]
         ):
             frame[column] = frame[column].map(unescape)
+            frame[column] = frame[column].map(tidy_whitespace)
             frame[column] = frame[column].map(
                 lambda value: (
                     pd.NA if isinstance(value, str) and not value.strip() else value
@@ -62,3 +64,18 @@ def unescape(value):
     while (decoded := html.unescape(value)) != value:
         value = decoded
     return value
+
+
+def tidy_whitespace(value):
+    """Collapses runs of whitespace and nulls values with nothing left.
+
+    Args:
+        value: A value from a raw payload; non-strings pass through.
+
+    Returns:
+        The tidied string, ``pd.NA`` if it was blank, or the value unchanged.
+    """
+    if not isinstance(value, str):
+        return value
+    tidied = re.sub(r"\s+", " ", value).strip()
+    return tidied or pd.NA

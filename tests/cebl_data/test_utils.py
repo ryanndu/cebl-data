@@ -1,6 +1,6 @@
 import pandas as pd
 
-from cebl_data.utils import clean_strings, unescape
+from cebl_data.utils import clean_strings, tidy_whitespace, unescape
 
 
 def test_unescape_decodes_entities():
@@ -26,3 +26,21 @@ def test_clean_strings_nulls_empty_and_whitespace():
 def test_clean_strings_unescapes_string_columns():
     frame = pd.DataFrame({"name": ["D&#039;Andre"]})
     assert clean_strings(frame)["name"].iloc[0] == "D'Andre"
+
+
+def test_tidy_whitespace_collapses_and_trims():
+    assert tidy_whitespace("Chris  Buccella") == "Chris Buccella"
+    assert tidy_whitespace(" Tony Turnbull ") == "Tony Turnbull"
+
+
+def test_tidy_whitespace_passes_non_strings_through():
+    assert tidy_whitespace(7) == 7
+    assert tidy_whitespace(None) is None
+
+
+def test_clean_strings_tidies_whitespace_in_string_columns():
+    frame = pd.DataFrame({"name": ["Chris  Buccella", "Derek Brown Jr. "]})
+    assert clean_strings(frame)["name"].tolist() == [
+        "Chris Buccella",
+        "Derek Brown Jr.",
+    ]
