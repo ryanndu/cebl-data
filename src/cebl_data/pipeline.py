@@ -41,7 +41,7 @@ def update_team_boxscore(schedule: pd.DataFrame) -> None:
     """Adds any games missing from the published team box score.
 
     Only completed and cancelled games are fetched, since Genius
-    returns 403 for cancelledones. Games already published are 
+    returns 403 for cancelledones. Games already published are
     skipped, so a run that fails partway picks up where it left off.
 
     Args:
@@ -72,7 +72,7 @@ def update_player_boxscore(schedule: pd.DataFrame) -> None:
     """Adds any games missing from the published player box score.
 
     Only completed and cancelled games are fetched, since Genius
-    returns 403 for cancelledones. Games already published are 
+    returns 403 for cancelledones. Games already published are
     skipped, so a run that fails partway picks up where it left off.
 
     Args:
@@ -103,7 +103,7 @@ def update_pbp(schedule: pd.DataFrame) -> None:
     """Adds any games missing from the published play-by-play.
 
     Only completed and cancelled games are fetched, since Genius
-    returns 403 for cancelledones. Games already published are 
+    returns 403 for cancelledones. Games already published are
     skipped, so a run that fails partway picks up where it left off.
 
     Args:

@@ -83,4 +83,3 @@ def write_published(frame: pd.DataFrame, dataset: str) -> None:
     release.upload_asset_from_memory(
         buffer.getvalue(), len(buffer.getvalue()), name=asset_name(dataset)
     )
-    

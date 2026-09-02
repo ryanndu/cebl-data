@@ -15,7 +15,11 @@ def load_packaged_config(relative_path: str) -> dict:
     Returns:
         dict: A Python dictionary containing the parsed JSON data.
     """
-    with files("cebl_data").joinpath("configs", relative_path).open(encoding="utf-8") as f:
+    with (
+        files("cebl_data")
+        .joinpath("configs", relative_path)
+        .open(encoding="utf-8") as f
+    ):
         return json.load(f)
 
 
@@ -32,10 +36,14 @@ def clean_strings(frame: pd.DataFrame) -> pd.DataFrame:
         pd.DataFrame: The same frame with string columns normalised.
     """
     for column in frame.columns:
-        if frame[column].dtype == "object" or pd.api.types.is_string_dtype(frame[column]):
+        if frame[column].dtype == "object" or pd.api.types.is_string_dtype(
+            frame[column]
+        ):
             frame[column] = frame[column].map(unescape)
             frame[column] = frame[column].map(
-                lambda value: pd.NA if isinstance(value, str) and not value.strip() else value
+                lambda value: (
+                    pd.NA if isinstance(value, str) and not value.strip() else value
+                )
             )
     return frame
 

@@ -140,7 +140,8 @@ def build_pbp(payload: dict, game) -> pd.DataFrame:
         shooting = [
             index
             for index, event in enumerate(events)
-            if event["actionType"] in ("2pt", "3pt") and event["tno"] == int(team_number)
+            if event["actionType"] in ("2pt", "3pt")
+            and event["tno"] == int(team_number)
         ]
         for index, shot in zip(shooting, team["shot"]):
             coordinates[index] = (shot["x"], shot["y"])
@@ -161,8 +162,10 @@ def build_pbp(payload: dict, game) -> pd.DataFrame:
         row["season"] = game.season
         row["is_home"] = is_home
         row["team_id"] = (
-            None if is_home is None
-            else game.home_team_id if is_home
+            None
+            if is_home is None
+            else game.home_team_id
+            if is_home
             else game.away_team_id
         )
         row["pno"] = None if event["pno"] == 0 else str(event["pno"])
@@ -171,7 +174,12 @@ def build_pbp(payload: dict, game) -> pd.DataFrame:
         rows.append(row)
 
     pbp = pd.DataFrame(rows).rename(columns=config["rename"])
-    for column in ["home_score", "away_score", "action_number", "previous_action_number"]:
+    for column in [
+        "home_score",
+        "away_score",
+        "action_number",
+        "previous_action_number",
+    ]:
         if column in pbp:
             pbp[column] = pd.to_numeric(pbp[column], errors="coerce")
     pbp = clean_strings(pbp)

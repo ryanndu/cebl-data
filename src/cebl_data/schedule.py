@@ -75,7 +75,6 @@ def build_schedule(payload: list[dict], season: int) -> pd.DataFrame:
     config = load_packaged_config("schedule.json")
     known = set(config["rename"]) | set(config["dropped"]) | set(config["dtypes"])
 
-
     schedule = pd.DataFrame(payload)
     unexpected = set(schedule.columns) - known
     if unexpected:
