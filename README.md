@@ -16,6 +16,7 @@ Every dataset is one Parquet file, updated on each run.
 | Team box score | `team-boxscore` | `cebl_team_boxscore.parquet` | one per team per game |
 | Player box score | `player-boxscore` | `cebl_player_boxscore.parquet` | one per player per game |
 | Play-by-play | `pbp` | `cebl_pbp.parquet` | one per event |
+| Officials | `pbp` | `cebl_officials.parquet` | one per official per game |
 
 Read one directly:
 
