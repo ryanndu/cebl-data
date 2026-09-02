@@ -8,6 +8,7 @@ from cebl_data.games import (
     build_pbp,
     build_player_boxscore,
     build_team_boxscore,
+    build_officials,
     fetch_game,
 )
 from cebl_data.schedule import get_schedule
@@ -130,6 +131,37 @@ def update_pbp(schedule: pd.DataFrame) -> None:
     write_published(pbp, "pbp")
 
 
+def update_officials(schedule: pd.DataFrame) -> None:
+    """Adds any games missing from the published officials.
+
+    Only completed and cancelled games are fetched, since Genius
+    returns 403 for cancelledones. Games already published are
+    skipped, so a run that fails partway picks up where it left off.
+
+    Args:
+        schedule (pd.DataFrame): The full schedule.
+    """
+    published = read_published("officials")
+
+    playable = schedule[schedule["status"].isin(["COMPLETE", "CANCELLED"])]
+    missing = playable[~playable["fiba_game_id"].isin(published["fiba_game_id"])]
+
+    crews = []
+    for game in missing.itertuples():
+        try:
+            payload = fetch_game(game.fiba_game_id)
+        except requests.RequestException as error:
+            print(f"{game.fiba_game_id}: {error}")
+            continue
+        crews.append(build_officials(payload, game))
+
+    if not crews:
+        return
+
+    officials = pd.concat([published, *crews], ignore_index=True)
+    write_published(officials, "officials")
+
+
 def update_all(seasons: list[int]) -> None:
     """Refreshes every published dataset.
 
@@ -144,6 +176,7 @@ def update_all(seasons: list[int]) -> None:
     update_team_boxscore(schedule)
     update_player_boxscore(schedule)
     update_pbp(schedule)
+    update_officials(schedule)
 
 
 if __name__ == "__main__":

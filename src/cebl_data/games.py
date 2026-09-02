@@ -184,3 +184,50 @@ def build_pbp(payload: dict, game) -> pd.DataFrame:
             pbp[column] = pd.to_numeric(pbp[column], errors="coerce")
     pbp = clean_strings(pbp)
     return pbp.reindex(columns=list(config["dtypes"])).astype(config["dtypes"])
+
+
+def build_officials(payload: dict, game) -> pd.DataFrame:
+    """Builds the officials for one game.
+
+    Args:
+        payload (dict): A raw game payload.
+        game: A row from the schedule DataFrame.
+
+    Returns:
+        pd.DataFrame: One row per official.
+    """
+    config = load_packaged_config("officials.json")
+    known = set(config["rename"]) | set(config["dropped"]) | set(config["dtypes"])
+
+    rows = []
+    if "officials" in payload:
+        for role, details in payload["officials"].items():
+            unexpected = set(details) - known
+            if unexpected:
+                print(f"{game.fiba_game_id}: unexpected fields {sorted(unexpected)}")
+            rows.append({**details, "official_type": role})
+    else:
+        for field, name in payload.items():
+            if field.startswith("officials_"):
+                rows.append(
+                    {"name": name, "official_type": field.removeprefix("officials_")}
+                )
+
+    for row in rows:
+        row["fiba_game_id"] = game.fiba_game_id
+        row["season"] = game.season
+
+    officials = pd.DataFrame(rows).rename(columns=config["rename"])
+    officials = clean_strings(officials)
+    officials = officials.reindex(columns=list(config["dtypes"])).astype(
+        config["dtypes"]
+    )
+
+    name_columns = [
+        "official_name",
+        "first_name",
+        "family_name",
+        "international_first_name",
+        "international_family_name",
+    ]
+    return officials[officials[name_columns].notna().any(axis=1)]
