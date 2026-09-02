@@ -6,6 +6,4 @@ __pycache__/
 
 *.parquet
 *.csv
-schedule_*.json
-old_code/
 cache
