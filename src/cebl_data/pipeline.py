@@ -5,10 +5,10 @@ import requests
 from dotenv import load_dotenv
 
 from cebl_data.games import (
+    build_officials,
     build_pbp,
     build_player_boxscore,
     build_team_boxscore,
-    build_officials,
     fetch_game,
 )
 from cebl_data.schedule import get_schedule
