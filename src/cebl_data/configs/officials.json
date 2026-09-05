@@ -1,0 +1,27 @@
+{
+  "rename": {
+    "name": "official_name",
+    "firstName": "first_name",
+    "familyName": "family_name",
+    "internationalFirstName": "international_first_name",
+    "internationalFamilyName": "international_family_name"
+  },
+  "dropped": [
+    "firstNameInitial",
+    "familyNameInitial",
+    "internationalFirstNameInitial",
+    "internationalFamilyNameInitial",
+    "scoreboardName",
+    "personId"
+  ],
+  "dtypes": {
+    "fiba_game_id": "string",
+    "season": "int16",
+    "official_type": "string",
+    "official_name": "string",
+    "first_name": "string",
+    "family_name": "string",
+    "international_first_name": "string",
+    "international_family_name": "string"
+  }
+}
