@@ -2,7 +2,7 @@
 
 Scrapes Canadian Elite Basketball League game data and publishes it as
 Parquet files on GitHub Releases. The [ceblpy](https://github.com/ryanndu/ceblpy)
-and [ceblR](https://github.com/ryanndu/ceblR) packages read these files so if
+and [ceblR](https://github.com/awosoga/ceblR) packages read these files so if
 you want the data in Python or R, start there. This repository is the
 pipeline that produces them.
 
